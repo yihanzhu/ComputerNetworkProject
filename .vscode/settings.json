@@ -1,0 +1,27 @@
+{
+    "files.associations": {
+        "udp.h": "c",
+        "ip.h": "c",
+        "ether.h": "c",
+        "cmath": "c",
+        "compare": "c",
+        "concepts": "c",
+        "cstdarg": "c",
+        "cstdio": "c",
+        "cstdlib": "c",
+        "type_traits": "c",
+        "limits": "c",
+        "new": "c",
+        "*.tcc": "c",
+        "cstdint": "c",
+        "typeinfo": "c",
+        "stdio.h": "c",
+        "segment.h": "c",
+        "data.h": "c",
+        "frame.h": "c",
+        "string.h": "c",
+        "tcp.h": "c",
+        "inet.h": "c",
+        "ethernet.h": "c"
+    }
+}
