@@ -2,6 +2,8 @@
 #include <net/ethernet.h>
 #include "packet.h"
 
+#define FRAME_SIZE 1300
+
 typedef struct tagEthHeader {
     char *       dmac;
     char *       smac;
@@ -14,4 +16,4 @@ typedef struct tagFrame {
 	Packet packet;
 } Frame;
 
-Frame create_data_frame(Packet packet, char *smac, char *dmac);
+void create_frame(const char *packet, char *frame);

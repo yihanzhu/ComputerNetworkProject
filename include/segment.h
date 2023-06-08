@@ -7,7 +7,7 @@
 #include <arpa/inet.h>
 #include "data.h"
 
-#define SEG_SIZE 4096
+#define SEG_SIZE 1100
 
 struct pseudo_header
 {

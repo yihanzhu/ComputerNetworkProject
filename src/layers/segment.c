@@ -27,28 +27,32 @@ unsigned short csum(unsigned short *ptr,int nbytes) {
 };
 
 void create_segment(const char *buf, char *segment){
-    char segment1[DATA_SIZE];
-    memset(segment1, 0, SEG_SIZE);
 
-    printf("%s: %ld\n", __func__, strlen(segment1));
+    memset(segment, 0, SEG_SIZE);
 
     // Transport Layer for Sender - UDP header
-    struct udphdr *udph = (struct udphdr *) (segment1);
+    struct udphdr *udph = (struct udphdr *) (segment);
 
     //Data part
-    char *data = (char *) (segment1 + sizeof(struct udphdr));
-    strcpy(data, buf);
+    char *data = (char *) (segment + sizeof(struct udphdr));
+    memcpy(data, buf, DATA_SIZE);
 
-    printf("%s: %ld\n", __func__, strlen(data));
+    // printf("%s: %ld\n", __func__, strlen(data));
 
     //UDP header
-    udph->source = htons (6666);
-    udph->dest = htons (8622);
-    udph->len = htons(8 + strlen(data)); //tcp header size
+    udph->source = htons(6666);
+    udph->dest = htons(8622);
+    udph->len = htons(sizeof(struct udphdr) + strlen(data)); //tcp header size
     udph->check = 0; //leave checksum 0 now, filled later by pseudo header
 
-    printf("%s: %ld\n", __func__, strlen(segment1));
-    printf("%s: %ld\n", __func__, sizeof(struct udphdr));
+    // printf("%s: %s\n", __func__, segment+4*sizeof(uint16_t));
+
+    // // check for segment values
+    // printf("%s: %d\n", __func__, ntohs(udph->source));
+    // printf("%s: %d\n", __func__, ntohs(udph->dest));
+    // printf("%s: %d\n", __func__, ntohs(udph->len));
+    // printf("%s: %d\n", __func__, udph->check);
+
     // struct pseudo_header psh;
     // char source_ip[32], dest_ip[32], *pseudogram;
     // //some address resolution
@@ -80,14 +84,7 @@ void create_segment(const char *buf, char *segment){
     // seg.header.len = htons(8 + strlen(buf));
     // seg.header.check = 0;
 
-    // check for segment values
-    // printf("%s: %s\n", __func__, seg.data.filename);
-    // printf("%s: %s\n", __func__, seg.data.filedata);
-    // printf("%s: %d\n", __func__, strlen(buf));
-    // printf("%s: %d\n", __func__, ntohs(seg.header.source));
-    // printf("%s: %d\n", __func__, ntohs(seg.header.dest));
-    // printf("%s: %d\n", __func__, ntohs(seg.header.len));
-    // printf("%s: %d\n", __func__, seg.header.check);
+
 
 
 };

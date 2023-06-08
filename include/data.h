@@ -1,4 +1,4 @@
-#define DATA_SIZE 4096
+#define DATA_SIZE 1000
 #define BUF_SIZE 1100
 
 typedef struct tagData {
