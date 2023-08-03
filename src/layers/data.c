@@ -4,7 +4,7 @@
 #include <regex.h>
 #include "data.h"
 
-void create_data(const char *file, char *buf){
+void create_data(const char *file, Data *data){
 
     FILE *fp;
     if((fp = fopen(file, "r")) == NULL) {
@@ -12,11 +12,11 @@ void create_data(const char *file, char *buf){
         exit(1);
     }
 
-    Data data;
-    data.filename = file;
-    fread((void*)data.filedata, sizeof(char), DATA_SIZE, fp);
+    // Data data;
+    data->filename = file;
+    fread((void*)data->filedata, sizeof(char), DATA_SIZE, fp);
 
-    data_to_string(&data, buf);
+    // data_to_string(&data, buf);
 };
 
 void data_to_string(const Data *data, char *str) {

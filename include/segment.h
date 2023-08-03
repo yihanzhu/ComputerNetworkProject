@@ -19,9 +19,9 @@ struct pseudo_header
 };
 
 typedef struct tagSegment {
-	struct udphdr header;
-    Data data;
+	struct udphdr udph;
+    Data *data;
 } Segment;
 
 unsigned short csum(unsigned short *ptr,int nbytes);
-void create_segment(const char *buf, char *segment);
+void create_segment(const Data *data, Segment *segment);

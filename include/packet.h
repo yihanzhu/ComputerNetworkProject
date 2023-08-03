@@ -6,10 +6,10 @@
 #define PACKET_SIZE 1200
 
 typedef struct tagPacket {
-    struct iphdr header; // <netinet/ip.h>
-	Segment segment;
+    struct iphdr iph; // <netinet/ip.h>
+	Segment *segment;
 } Packet;
 
-void create_packet(const char *segment, char *packet);
+void create_packet(const Segment *segment, Packet *packet);
 
 

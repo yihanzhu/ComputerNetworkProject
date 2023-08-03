@@ -6,6 +6,6 @@ typedef struct tagData {
 	char filedata[DATA_SIZE];
 } Data;
 
-void create_data(const char *file, char *buf);
+void create_data(const char *file, Data *data);
 void data_to_string(const Data *data, char *str);
 void string_to_data(const char *str, Data *data);

@@ -5,15 +5,16 @@
 #define FRAME_SIZE 1300
 
 typedef struct tagEthHeader {
-    char *       dmac;
-    char *       smac;
+    char        dmac[6];
+    char        smac[6];
     uint16_t       ether_type;
 } EthHeader;
 
 typedef struct tagFrame {
     // struct ether_header header; // <net/ethernet.h>
-	EthHeader header;
-	Packet packet;
+	// struct ether_header eth;
+    EthHeader eth;
+	Packet *packet;
 } Frame;
 
-void create_frame(const char *packet, char *frame);
+void create_frame(const Packet *packet, Frame *frame);

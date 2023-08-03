@@ -1,49 +1,50 @@
 #include "segment.h"
 
-/*
-    Generic checksum calculation function
-*/
-unsigned short csum(unsigned short *ptr,int nbytes) {
-    register long sum;
-    unsigned short oddbyte;
-    register short answer;
+// /*
+//     Generic checksum calculation function
+// */
+// unsigned short csum(unsigned short *ptr,int nbytes) {
+//     register long sum;
+//     unsigned short oddbyte;
+//     register short answer;
 
-    sum=0;
-    while(nbytes>1) {
-        sum+=*ptr++;
-        nbytes-=2;
-    }
-    if(nbytes==1) {
-        oddbyte=0;
-        *((u_char*)&oddbyte)=*(u_char*)ptr;
-        sum+=oddbyte;
-    }
+//     sum=0;
+//     while(nbytes>1) {
+//         sum+=*ptr++;
+//         nbytes-=2;
+//     }
+//     if(nbytes==1) {
+//         oddbyte=0;
+//         *((u_char*)&oddbyte)=*(u_char*)ptr;
+//         sum+=oddbyte;
+//     }
 
-    sum = (sum>>16)+(sum & 0xffff);
-    sum = sum + (sum>>16);
-    answer=(short)~sum;
+//     sum = (sum>>16)+(sum & 0xffff);
+//     sum = sum + (sum>>16);
+//     answer=(short)~sum;
 
-    return(answer);
-};
+//     return(answer);
+// };
 
-void create_segment(const char *buf, char *segment){
+void create_segment(const Data *data, Segment *segment){
 
-    memset(segment, 0, SEG_SIZE);
+    // memset(segment, 0, SEG_SIZE);
 
-    // Transport Layer for Sender - UDP header
-    struct udphdr *udph = (struct udphdr *) (segment);
+    // // Transport Layer for Sender - UDP header
+    // struct udphdr *udph = (struct udphdr *) (segment);
 
-    //Data part
-    char *data = (char *) (segment + sizeof(struct udphdr));
-    memcpy(data, buf, DATA_SIZE);
+    // //Data part
+    // char *data = (char *) (segment + sizeof(struct udphdr));
+    // memcpy(data, buf, DATA_SIZE);
 
     // printf("%s: %ld\n", __func__, strlen(data));
 
+    segment->data = data;
     //UDP header
-    udph->source = htons(6666);
-    udph->dest = htons(8622);
-    udph->len = htons(sizeof(struct udphdr) + strlen(data)); //tcp header size
-    udph->check = 0; //leave checksum 0 now, filled later by pseudo header
+    segment->udph.source = htons(6666);
+    segment->udph.dest = htons(8622);
+    segment->udph.len = htons(sizeof(struct udphdr) + sizeof(data)); //tcp header size
+    segment->udph.check = 0; //leave checksum 0 now, filled later by pseudo header
 
     // printf("%s: %s\n", __func__, segment+4*sizeof(uint16_t));
 
